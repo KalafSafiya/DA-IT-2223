@@ -1,0 +1,60 @@
+% Merge Sort
+function sortedArray = mergeSort(arr)
+    if length(arr) <= 1
+        sortedArray = arr;
+        return;
+    end
+    mid = floor(length(arr) / 2);
+    left = mergeSort(arr(1:mid));
+    right = mergeSort(arr(mid+1:end));
+    sortedArray = merge(left, right);
+end
+
+function mergedArray = merge(left, right)
+    mergedArray = [];
+    while ~isempty(left) && ~isempty(right)
+        if left(1) <= right(1)
+            mergedArray = [mergedArray, left(1)];
+            left(1) = [];
+        else
+            mergedArray = [mergedArray, right(1)];
+            right(1) = [];
+        end
+    end
+    mergedArray = [mergedArray, left, right];
+end
+
+% Quick Sort
+function sortedArray = quickSort(arr)
+    if length(arr) <= 1
+        sortedArray = arr;
+        return;
+    end
+    pivot = arr(end);
+    left = arr(arr < pivot);
+    middle = arr(arr == pivot);
+    right = arr(arr > pivot);
+    sortedArray = [quickSort(left), middle, quickSort(right)];
+end
+
+% Example Usage
+arr = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5];
+disp("Original Array:");
+disp(arr);
+
+disp("Merge Sorted Array:");
+disp(mergeSort(arr));
+
+disp("Quick Sorted Array:");
+disp(quickSort(arr));
+
+Output
+sortExample
+Original Array:
+     3     1     4     1     5     9     2     6     5     3     5
+
+Merge Sorted Array:
+     1     1     2     3     3     4     5     5     5     6     9
+
+Quick Sorted Array:
+     1     1     2     3     3     4     5     5     5     6     9
