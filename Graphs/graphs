@@ -1,0 +1,83 @@
+MATLAB Practical: Graph Theory Visualizations
+
+This practical demonstrates graph representation and visualization techniques using MATLAB. It includes adjacency matrices, directed and undirected graphs, node coloring, and edge highlighting.
+
+1. Adjacency Matrix Representation
+A = [0 1 0;
+     1 0 1;
+     0 1 0];
+
+G = graph(A);
+plot(G);
+title('Adjacency Matrix Representation');
+
+2. Directed Graph with Weights
+s = [1 1 1 2 5 3 6 4 7 8 8 8];
+t = [2 3 4 5 3 6 4 7 2 6 7 5];
+weights = [100 10 10 10 10 20 10 30 50 10 70 10];
+
+G = digraph(s, t, weights);
+plot(G, 'EdgeLabel', G.Edges.Weight, 'NodeColor', 'r');
+
+3. Complex Directed Graph with Multiple Paths
+s = [1 1 1 2 2 6 6 7 7 3 3 9 9 4 4 11 11 8];
+t = [2 3 4 5 6 7 8 5 8 9 10 5 10 11 12 10 12 12];
+weights = [10 10 10 10 10 1 1 1 1 1 1 1 1 1 1 1 1 1];
+
+G = digraph(s, t, weights);
+plot(G, 'EdgeLabel', G.Edges.Weight, 'NodeColor', 'r');
+plot(G, 'EdgeLabel', G.Edges.Weight, 'Layout', 'force');
+
+4. Undirected Graph with Node Colors
+s = [1 1 2 3 4];
+t = [2 3 4 4 5];
+G = graph(s, t);
+
+nodeColors = [
+    1 0 0;  % Red
+    0 1 0;  % Green
+    0 0 1;  % Blue
+    1 1 0;  % Yellow
+    1 0 1;  % Magenta
+];
+
+plot(G, 'NodeColor', nodeColors, 'LineWidth', 1.5);
+
+5. Star-Shaped Graph with Highlighted Nodes and Edges
+s = 1;
+t = 2:6;
+G = graph(s, t);
+
+h = plot(G, 'Layout', 'force');
+highlight(h, [1, 3], 'NodeColor', 'red');
+highlight(h, [1, 3], 'EdgeColor', 'magenta');
+
+%% 6. Displaying Node Connections
+s = [1 1 2 3 4];
+t = [2 3 4 4 5];
+G = graph(s, t);
+
+for node = 1:numnodes(G)
+    adj = neighbors(G, node);
+    fprintf('Node %d is connected to: ', node);
+    fprintf('%d ', adj);
+    fprintf('\n');
+end
+
+Sample Output:
+Node 1 is connected to: 2 3 
+Node 2 is connected to: 1 4 
+Node 3 is connected to: 1 4 
+Node 4 is connected to: 2 3 5 
+Node 5 is connected to: 4 
+
+7. Circular Graph with Repeated Connections
+s = [1 2 3 4 5 6 6 6 6 6 5 7 1 8 2 9 3 10 4 11 7 8 9 10 11];
+t = [2 3 4 5 1 1 2 3 4 5 7 1 8 2 9 3 10 4 11 5 6 6 6 6 6];
+
+G = graph(s, t);
+h = plot(G);
+
+for node = 1:5
+    highlight(h, node, 'NodeColor', 'blue');
+end
